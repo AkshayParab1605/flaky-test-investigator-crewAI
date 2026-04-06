@@ -13,6 +13,22 @@ This project utilizes a sequential CrewAI process consisting of 3 specialized AI
 2. **Root Cause Analyst:** Takes the flagged flaky tests, fetches their exact code using the `TestSourceCodeTool`, and reads the code to identify anti-patterns (like `time.sleep()`, threading issues, etc.).
 3. **Fix Recommender:** Synthesizes the data into a final, structured JSON report detailing the cause, the recommended fix, and a decision on whether the test should be immediately quarantined.
 
+### 🔄 Agent Workflow Diagram
+
+```mermaid
+graph TD
+    A[⚙️ Test Suite History] -->|TestHistoryTool| B((🕵️ Flaky Test Detector))
+    B -->|Flagged Flaky Tests| C((🔬 Root Cause Analyst))
+    D[📄 Source Code] -->|TestSourceCodeTool| C
+    C -->|Root Cause Analysis| E((🛠️ Fix Recommender))
+    E -->|Structured Output| F[/📋 flaky_test_report.json/]
+    
+    style B fill:#2b3137,stroke:#24292e,stroke-width:2px,color:#fff
+    style C fill:#2b3137,stroke:#24292e,stroke-width:2px,color:#fff
+    style E fill:#2b3137,stroke:#24292e,stroke-width:2px,color:#fff
+    style F fill:#2ea44f,stroke:#24292e,stroke-width:2px,color:#fff
+```
+
 ---
 
 ## 🚀 Setup & Installation
